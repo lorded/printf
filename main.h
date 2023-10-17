@@ -1,6 +1,5 @@
-#ifndef CUSTOM_PRINTF_H
-#define CUSTOM_PRINTF_H
-
+#ifndef MAIN_H
+#define MAIN_H
 #include <stdarg.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -20,31 +19,31 @@
 #define S_SHORT 1
 
 /**
- * struct custom_forma_spec - Struct to define format specifiers and associated funky functions.
+ * struct fmt - Struct op
  *
- * @forma: The format specifier character.
- * @funky: The funky function associated with the format specifier.
+ * @fmt: The format.
+ * @fn: The function associated.
  */
-struct custom_forma_spec
+struct fmt
 {
-    char forma;
-    int (*funky)(va_list, char[], int, int, int, int);
+    char fmt;
+    int (*fn)(va_list, char[], int, int, int, int);
 };
 
 /**
- * typedef struct custom_forma_spec custom_forma_spec_t - Struct to define format specifiers and associated funky functions.
+ * typedef struct fmt fmt_t - Struct op
  *
- * @forma: The format specifier character.
- * @funky: The funky function associated with the format specifier.
+ * @fmt: The format.
+ * @fn_t: The function associated.
  */
-typedef struct custom_forma_spec custom_forma_spec_t;
+typedef struct fmt fmt_t;
 
 int custom_printf(const char *format, ...);
-int custom_handle_print(const char *forma, int *i, va_list list, char buffer[], int flags, int width, int precision, int size);
+int custom_handle_print(const char *fmt, int *i, va_list list, char buffer[], int flags, int width, int precision, int size);
 
 /****************** FUNCTIONS ******************/
 
-/* Functions to print characters and strings */
+/* Functions to print chars and strings */
 int custom_print_char(va_list types, char buffer[], int flags, int width, int precision, int size);
 int custom_print_string(va_list types, char buffer[], int flags, int width, int precision, int size);
 int custom_print_percent(va_list types, char buffer[], int flags, int width, int precision, int size);
@@ -56,12 +55,13 @@ int custom_print_unsigned(va_list types, char buffer[], int flags, int width, in
 int custom_print_octal(va_list types, char buffer[], int flags, int width, int precision, int size);
 int custom_print_hexadecimal(va_list types, char buffer[], int flags, int width, int precision, int size);
 int custom_print_hexa_upper(va_list types, char buffer[], int flags, int width, int precision, int size);
+
 int custom_print_hexa(va_list types, char map_to[], char buffer[], int flags, char flag_ch, int width, int precision, int size);
 
 /* Function to print non-printable characters */
 int custom_print_non_printable(va_list types, char buffer[], int flags, int width, int precision, int size);
 
-/* Function to print a memory address */
+/* Function to print memory address */
 int custom_print_pointer(va_list types, char buffer[], int flags, int width, int precision, int size);
 
 /* Functions to handle other specifiers */
@@ -70,7 +70,7 @@ int custom_get_width(const char *format, int *i, va_list list);
 int custom_get_precision(const char *format, int *i, va_list list);
 int custom_get_size(const char *format, int *i);
 
-/* Function to print a string in reverse */
+/* Function to print string in reverse */
 int custom_print_reverse(va_list types, char buffer[], int flags, int width, int precision, int size);
 
 /* Function to print a string in ROT13 */
@@ -91,5 +91,5 @@ int custom_is_digit(char);
 long int custom_convert_size_number(long int num, int size);
 long int custom_convert_size_unsgnd(unsigned long int num, int size);
 
-#endif /* CUSTOM_PRINTF_H */
+#endif /* MAIN_H */
 
