@@ -3,15 +3,15 @@
 void print_buffer(char buffer[], int *buff_ind);
 
 /**
- * _printf - This is the printf function
- * @format: This is the format.
- * Return: Will return printed results in char.
+ * _printf - The printf function.
+ * @format: Format.
+ * Return: Always the printed chars.
  */
 
 int _printf(const char *format, ...)
 
 {
-	int j, printed = 0, printed_chars = 0;
+	int j, prtd = 0, prtd_chars = 0;
 	int flags, width, precision, size, buff_ind = 0;
 	va_list list;
 	char buffer[BUFF_SIZE];
@@ -28,39 +28,38 @@ int _printf(const char *format, ...)
 			buffer[buff_ind++] = format[j];
 			if (buff_ind == BUFF_SIZE)
 				print_buffer(buffer, &buff_ind);
-			printed_chars++;
+			/* write(1, &format[i], 1);*/
+			prtd_chars++;
 		}
 		else
 		{
 			print_buffer(buffer, &buff_ind);
-			flags = get_flags(format, &j);
+			flags = getthe_flags(format, &j);
 			width = get_width(format, &j, list);
-			precision = get_precision(format, &j, list);
+			precision = get_prcsn(format, &j, list);
 			size = get_size(format, &j);
 			++j;
-			printed = handle_print(format, &j, list, buffer,
+			prtd = handle_print(format, &j, list, buffer,
 				flags, width, precision, size);
-			if (printed == -1)
+			if (prtd == -1)
 				return (-1);
-			printed_chars += printed;
+			prtd_chars += prtd;
 		}
 	}
-
 	print_buffer(buffer, &buff_ind);
 
 	va_end(list);
 
-	return (printed_chars);
+	return (prtd_chars);
 }
 
 /**
- * print_buffer - Will prints contents of the buffer if it exists.
- * @buffer: An array of chars
- * @buff_ind: The index at which to add  next char representing length.
+ * print_buffer - Will prints contents of the buffer if it exist.
+ * @buffer: An array of chars.
+ * @buff_ind: Index at which to add the next char, represents the length.
  */
 
 void print_buffer(char buffer[], int *buff_ind)
-
 {
 	if (*buff_ind > 0)
 		write(1, &buffer[0], *buff_ind);
